@@ -1,0 +1,12 @@
+@import 'https://fonts.googleapis.com/css?family=Mountains+of+Christmas';
+
+.appWrapper__container {
+  background-color: rgb(88, 76, 104);
+  padding: 30px;
+  position: relative;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}

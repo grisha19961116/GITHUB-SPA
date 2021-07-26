@@ -1,0 +1,17 @@
+.scoreBar__wrapper {
+  padding-left: 60px;
+  padding-top: 60px;
+  height: 95vh;
+  width: 40%;
+}
+
+.scoreBar__title {
+  color: aliceblue;
+  width: 100%;
+  text-align: start;
+  font-size: 40px;
+}
+
+.scoreBar__title:not(:last-child) {
+  margin-bottom: 30px;
+}
