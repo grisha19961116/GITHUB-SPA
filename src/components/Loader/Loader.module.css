@@ -1,0 +1,11 @@
+.loader {
+  position: fixed;
+  display: inline-block;
+  width: 5vw;
+  height: 5vh;
+  top: 86vh;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: 3vw;
+}

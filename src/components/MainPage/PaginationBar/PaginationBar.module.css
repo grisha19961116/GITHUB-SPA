@@ -1,0 +1,6 @@
+.pagination_wrapper {
+  margin: 0 auto;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: center;
+}

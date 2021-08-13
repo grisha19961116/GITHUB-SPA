@@ -1,44 +1,35 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 
 import style from './App.module.css';
-import CreateUserModal from './components/CreateUserModal/CreateUserModal';
-import ScoreBar from './components/ScoreBare/ScoreBar';
-import PlayGround from './components/PlayGround/PlayGround';
+import GreetingModal from './components/GreetingModal/GreetingModal';
+import MainPage from './components/MainPage/MainPage';
+import RepoView from './components/RepoView/RepoView';
+import Loader from './components/Loader/Loader';
+import { getLoad } from './redux/loading/selectors';
 
 function App() {
   const [isModal, setIsModal] = useState<true | false>(true);
-  interface ISetName {
-    firstPlayer: string;
-    secondPlayer: string;
-  }
-  const [name, setName] = useState<ISetName>({
-    firstPlayer: '',
-    secondPlayer: '',
-  });
-  interface ISetScore {
-    firstScore: number;
-    secondScore: number;
-  }
-  const [score, setScore] = useState<ISetScore>({
-    firstScore: 0,
-    secondScore: 0,
-  });
+  const isLoading = useSelector(getLoad);
 
-  const handleSubmit = (obj: ISetName): void => {
-    setName(obj);
-    setIsModal(prevState => !prevState);
-  };
+  useEffect(() => {
+    setTimeout(() => setIsModal(check => !check), 3000);
+  }, []);
 
   return (
-    <div className={style.appWrapper__container}>
-      {isModal && <CreateUserModal handleSubmit={handleSubmit} />}
-      {!isModal && (
-        <>
-          <PlayGround />
-          <ScoreBar name={name} score={score} />
-        </>
-      )}
-    </div>
+    <Switch>
+      <Route exact path={'/'}>
+        <div className={style.appWrapper}>
+          {isModal ? <GreetingModal /> : <MainPage />}
+          {isLoading && <Loader />}
+        </div>
+      </Route>
+      <Route exact path="/view/:id">
+        <RepoView />
+      </Route>
+      <Loader />
+    </Switch>
   );
 }
 

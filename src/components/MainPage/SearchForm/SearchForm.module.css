@@ -1,0 +1,21 @@
+.searchForm__title {
+  padding-top: 50px;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  width: 100%;
+  font-style: italic;
+  color: rgb(216, 211, 211);
+  margin-bottom: 20px;
+}
+.searchForm__form {
+  min-height: 100px;
+  width: 300px;
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: space-between;
+  justify-content: center;
+}
