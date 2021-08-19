@@ -1,4 +1,4 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer, current } from '@reduxjs/toolkit';
 
 import {
   actionAddRepository,
@@ -42,12 +42,21 @@ const reducerRepositories = createReducer(initialState, {
     if (state.repositoriesHome.length === 0)
       return { repositoriesHome: [{ ...payload, selected: false }] };
 
-    const repositories = state.repositoriesHome.map(repository => {
-      if (repository.id === payload.id)
+    const data = [...state.repositoriesHome];
+    let check = true;
+    const repositories = data.map(repository => {
+      if (repository.id === payload.id) {
+        check = false;
         return { ...payload, selected: repository.selected };
-
-      return { ...repository, selected: false };
+      }
+      if (repository.id !== payload.id) {
+        return repository;
+      }
     });
+
+    if (repositories.length === state.repositoriesHome.length && check) {
+      repositories.push({ ...payload, selected: false });
+    }
 
     return { repositoriesHome: repositories };
   },

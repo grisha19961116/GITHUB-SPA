@@ -23,6 +23,7 @@ const asyncOperationGetRepositories = (
   try {
     dispatch(actionIsLoading(true));
     const data = await getAllRepositories(githubName, repositoryName);
+    console.log(data, `asyncOperationGetRepositories`);
     if (data.length === 0) return errLogger({ message: 'Not exist this repo' });
     localStorage.removeItem('page');
     dispatch(actionGetRepository(data));
