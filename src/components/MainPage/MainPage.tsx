@@ -13,8 +13,8 @@ const MainPage = () => {
   const dispatch = useDispatch();
   const { repositoriesHome } = useSelector(getRepositoriesMemo);
 
-  const handleSubmit = async (name: string) => {
-    dispatch(await asyncOperationGetRepositories(name));
+  const handleSubmit = async (githubName: string, repositoryName: string) => {
+    dispatch(await asyncOperationGetRepositories(githubName, repositoryName));
   };
 
   const [activePage, setActivePage] = useState<number>(1);

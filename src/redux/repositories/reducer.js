@@ -39,11 +39,17 @@ const reducerRepositories = createReducer(initialState, {
   },
 
   [actionGetRepository]: (state, { payload }) => {
-    const repositories = { ...state };
-    repositories.repositoriesHome = payload.map(el => {
-      return { ...el, selected: false };
+    if (state.repositoriesHome.length === 0)
+      return { repositoriesHome: [{ ...payload, selected: false }] };
+
+    const repositories = state.repositoriesHome.map(repository => {
+      if (repository.id === payload.id)
+        return { ...payload, selected: repository.selected };
+
+      return { ...repository, selected: false };
     });
-    return repositories;
+
+    return { repositoriesHome: repositories };
   },
 });
 

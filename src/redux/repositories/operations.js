@@ -16,10 +16,13 @@ const errLogger = ({ message }) =>
     progress: undefined,
   });
 
-const asyncOperationGetRepositories = name => async dispatch => {
+const asyncOperationGetRepositories = (
+  githubName,
+  repositoryName,
+) => async dispatch => {
   try {
     dispatch(actionIsLoading(true));
-    const data = await getAllRepositories(name);
+    const data = await getAllRepositories(githubName, repositoryName);
     if (data.length === 0) return errLogger({ message: 'Not exist this repo' });
     localStorage.removeItem('page');
     dispatch(actionGetRepository(data));

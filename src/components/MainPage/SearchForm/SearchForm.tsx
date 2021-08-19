@@ -9,10 +9,11 @@ import s from './SearchForm.module.css';
 
 interface IGithubName {
   githubName: string;
+  repositoryName: string;
 }
 
 interface IHandleSubmit {
-  handleSubmit: (name: string) => void;
+  handleSubmit: (githubName: string, repositoryName: string) => void;
 }
 
 const validationSchemaNewPlayer: SchemaOf<IGithubName> = yup.object({
@@ -21,21 +22,28 @@ const validationSchemaNewPlayer: SchemaOf<IGithubName> = yup.object({
     .min(3, 'At least 3 charts')
     .max(45, 'Maximal 45 charts')
     .defined('githubName is required'),
+  repositoryName: yup
+    .string()
+    .min(3, 'At least 3 charts')
+    .max(45, 'Maximal 45 charts')
+    .defined('repositoryName is required'),
 });
 
 const SearchForm = ({ handleSubmit }: IHandleSubmit) => {
   const formik = useFormik({
     initialValues: {
       githubName: '',
+      repositoryName: '',
     },
 
     validationSchema: validationSchemaNewPlayer,
 
     onSubmit: (values, { resetForm }): any => {
       const githubName = values.githubName.replace(/\s/g, '');
-      if (githubName === '') {
+      const repositoryName = values.repositoryName.replace(/\s/g, '');
+      if (githubName === '' || repositoryName === '') {
         resetForm();
-        return toast.error(`🚀 githubName can't be empty string!`, {
+        return toast.error(`🚀 Field can't has empty string!`, {
           position: 'bottom-right',
           autoClose: 3000,
           hideProgressBar: false,
@@ -45,8 +53,8 @@ const SearchForm = ({ handleSubmit }: IHandleSubmit) => {
           progress: undefined,
         });
       }
-      if (githubName.length < 3) {
-        return toast.error(`🚀 githubName At least 3 charts!`, {
+      if (githubName.length < 3 || repositoryName.length < 3) {
+        return toast.error(`🚀 Field At least 3 charts!`, {
           position: 'bottom-right',
           autoClose: 3000,
           hideProgressBar: false,
@@ -56,14 +64,14 @@ const SearchForm = ({ handleSubmit }: IHandleSubmit) => {
           progress: undefined,
         });
       }
-      handleSubmit(githubName);
+      handleSubmit(githubName, repositoryName);
       resetForm();
     },
   });
 
   return (
     <>
-      <h2 className={s.searchForm__title}>Write github name</h2>
+      <h2 className={s.searchForm__title}>Write ownerName and githubName</h2>
       <form className={s.searchForm__form} onSubmit={formik.handleSubmit}>
         <TextField
           id="githubName"
@@ -73,6 +81,22 @@ const SearchForm = ({ handleSubmit }: IHandleSubmit) => {
           onChange={formik.handleChange}
           error={formik.touched.githubName && Boolean(formik.errors.githubName)}
           helperText={formik.touched.githubName && formik.errors.githubName}
+          fullWidth={true}
+        />
+
+        <TextField
+          id="repositoryName"
+          name="repositoryName"
+          label="repositoryName..."
+          value={formik.values.repositoryName}
+          onChange={formik.handleChange}
+          error={
+            formik.touched.repositoryName &&
+            Boolean(formik.errors.repositoryName)
+          }
+          helperText={
+            formik.touched.repositoryName && formik.errors.repositoryName
+          }
           fullWidth={true}
         />
 

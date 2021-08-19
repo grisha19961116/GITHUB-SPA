@@ -14,7 +14,10 @@ function App() {
   const isLoading = useSelector(getLoad);
 
   useEffect(() => {
-    setTimeout(() => setIsModal(check => !check), 3000);
+    const timerModal = setTimeout(() => setIsModal(check => !check), 3000);
+    return () => {
+      clearTimeout(timerModal);
+    };
   }, []);
 
   return (
